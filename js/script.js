@@ -80,7 +80,7 @@ function addPagination(list){
    // add active state to clicked button
          e.target.className = 'active';
    // run the desired page by reading the button's text content.
-         showPage(data,e.target.textContent)
+         showPage(list,e.target.textContent)
       }
    });
 }
@@ -104,20 +104,12 @@ let searchBar = document.createElement('label');
 searchBar.setAttribute('for', 'search')
 searchBar.className = 'student-search';
 
-//create element for span, input, button and append to searchBar
-search_span = document.createElement('span');
-search_span.textContent = `Search by Name`;
-searchBar.appendChild(search_span);
+//create element for span, input, button by adding innerHTML
 
-search_input = document.createElement('input');
-search_input.setAttribute('id', 'search');
-search_input.placeholder = 'Search by name...';
-searchBar.appendChild(search_input);
-
-search_button = document.createElement('button')
-search_button.type = 'button';
-search_button.innerHTML = `<img src="img/icn-search.svg" alt="Search icon">`;
-searchBar.appendChild(search_button);
+searchBar.innerHTML = 
+`<span>Search by name</span>
+<input id="search" placeholder="Search by name...">
+<button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>`; 
 
 // append searchBar to header
 js_header.appendChild(searchBar);
@@ -139,10 +131,8 @@ function searchName(input,list){
    let searchList = [];
 // create a for loop to go through the list to find student based on first or last name
    for (i = 0; i < list.length; i++){
-      firstNameInput = list[i].name.first.toLowerCase();
-      lastNameInput = list[i].name.last.toLowerCase();
 // create a conditional statement to check if the input includes any first name or last name. Reminder to change to lower case.      
-      if(firstNameInput.includes(input.value.toLowerCase()) || lastNameInput.includes(input.value.toLowerCase()) ){
+      if(list[i].name.first.toLowerCase().includes(input.value.toLowerCase()) || list[i].name.last.toLowerCase().includes(input.value.toLowerCase()) ){
 // if it matches, push it into the searchList array.
          searchList.push(list[i]);
       }
@@ -156,20 +146,22 @@ function searchName(input,list){
 
 // run showPage and addPagination functions according to the searchList
 
+
 showPage(searchList,1);
 addPagination(searchList);
+
 
 };
 
 //Add an event listener to the search 
 search.addEventListener("keyup", () => {
 
-   //Create a conditional statement that shoes if the value is not 0, use the function SearchComponent, and if there is not input, show the list of students on the page
+   //Create a conditional statement that shows if there is input (value.length is not 0), use the function searchName to filter for names. if there is no input, show the list of students on the page
       if(search.value.length != 0) {
          searchName(search, data);
       } else {
-         showPage(data, 1)
-         addPagination(data);
+        showPage(data, 1)
+        addPagination(data);
       }
    })
 
