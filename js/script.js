@@ -65,11 +65,12 @@ function addPagination(list){
       
 // Insert DOM element
    linklist.insertAdjacentHTML('beforeend', linklistHTML)
-   }  
+     
 // Make first button active state.
-   const firstButton = document.querySelector('li > button');
+   let firstButton = document.querySelector('li > button');
    firstButton.className = 'active';
-
+   };
+   
 // change clicked buttons to active state 
    linklist.addEventListener('click', (e) => {
       buttonClicked = e.target;
